@@ -5,7 +5,7 @@ from django.conf import settings
 # Create your views here.
 
 
-def formularioContacto(request):
+def formulario_contacto(request):
     return render(request, "contactForm.html")
 
 

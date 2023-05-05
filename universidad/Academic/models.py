@@ -15,10 +15,10 @@ class Carrera(models.Model):
 
 class Estudiante(models.Model):
     dni = models.CharField(max_length=8, primary_key=True)
-    apellidoPaterno = models.CharField(max_length=35)
-    apellidoMaterno = models.CharField(max_length=35)
+    apellido_paterno = models.CharField(max_length=35)
+    apellido_materno = models.CharField(max_length=35)
     nombres = models.CharField(max_length=35)
-    fechaNacimiento = models.DateField()
+    fecha_de_nacimiento = models.DateField()
     sexos = [
         ('F', 'Femenino'),
         ('M', 'Masculino')
@@ -28,17 +28,17 @@ class Estudiante(models.Model):
         Carrera, null=False, blank=False, on_delete=models.CASCADE)
     vigencia = models.BooleanField(default=True)
 
-    def nombreCompleto(self):
+    def nombre_completo(self):
         txt = "{0} {1}, {2}"
-        return txt.format(self.apellidoPaterno, self.apellidoMaterno, self.nombres)
+        return txt.format(self.apellido_paterno, self.apellido_materno, self.nombres)
 
     def __str__(self):
         txt = "{0} / Carrera: {1} / {2}"
         if self.vigencia:
-            estadoEstudiante = "VIGENTE"
+            estado_estudiante = "VIGENTE"
         else:
-            estadoEstudiante = "DE BAJA"
-        return txt.format(self.nombreCompleto(), self.carrera, estadoEstudiante)
+            estado_estudiante = "DE BAJA"
+        return txt.format(self.nombre_completo(), self.carrera, estado_estudiante)
 
 
 class Curso(models.Model):
@@ -58,7 +58,7 @@ class Matricula(models.Model):
         Estudiante, null=False, blank=False, on_delete=models.CASCADE)
     curso = models.ForeignKey(
         Curso, null=False, blank=False, on_delete=models.CASCADE)
-    fechaMatricula = models.DateTimeField(auto_now_add=True)
+    fecha_matricula = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         txt = "{0} matruculad{1} en el curso {2} / Fecha: {3}"
@@ -66,5 +66,5 @@ class Matricula(models.Model):
             letraSexo = "a"
         else:
             letraSexo = "o"
-        fecMat = self.fechaMatricula.strftime("%A %d/%m/%Y %H:%M:%S")
-        return txt.format(self.estudiante.nombreCompleto(), letraSexo, self.curso, fecMat)
+        fec_matr = self.fecha__matricularicula.strftime("%A %d/%m/%Y %H:%M:%S")
+        return txt.format(self.estudiante.nombre_completo(), letraSexo, self.curso, fec_matr)
